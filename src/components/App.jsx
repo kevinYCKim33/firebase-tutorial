@@ -2,6 +2,7 @@ import "./App.css";
 import { firestore } from "../firebase";
 import React, { useState, useEffect } from "react";
 import Posts from "./Posts";
+import { collectIdsAndDocs } from "../utilities";
 
 function App() {
   const [posts, setPosts] = useState([]);
@@ -24,11 +25,10 @@ function App() {
 
       // snapshot.docs.map();
 
+      // https://console.firebase.google.com/u/1/project/think-piece-dad44/authentication/providers
       const snapshot = await firestore.collection("posts").get();
 
-      const posts = snapshot.docs.map((doc) => {
-        return { id: doc.id, ...doc.data() };
-      });
+      const posts = snapshot.docs.map(collectIdsAndDocs);
 
       setPosts(posts);
     }
@@ -36,8 +36,14 @@ function App() {
     executeOnMount();
   }, []);
 
-  const handleCreate = (post) => {
-    setPosts([post, ...posts]);
+  const handleCreate = async (post) => {
+    const docRef = await firestore.collection("posts").add(post);
+
+    const doc = await docRef.get();
+
+    const newPost = collectIdsAndDocs(doc);
+
+    setPosts([newPost, ...posts]);
   };
 
   console.log("posts: ", posts);
