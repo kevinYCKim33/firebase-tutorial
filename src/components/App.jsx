@@ -1,6 +1,7 @@
 import "./App.css";
 import { firestore } from "../firebase";
 import React, { useState, useEffect } from "react";
+import Posts from "./Posts";
 
 function App() {
   const [posts, setPosts] = useState([]);
@@ -35,24 +36,17 @@ function App() {
     executeOnMount();
   }, []);
 
+  const handleCreate = (post) => {
+    setPosts([post, ...posts]);
+  };
+
   console.log("posts: ", posts);
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <main className="Application">
+      <h1>Think Piece</h1>
+      <Posts posts={posts} onCreate={handleCreate} />
+    </main>
   );
 }
 
