@@ -48,10 +48,18 @@ function App() {
 
   console.log("posts: ", posts);
 
+  const handleRemove = async (id) => {
+    await firestore.doc(`posts/${id}`).delete();
+
+    const filteredPosts = posts.filter((post) => post.id !== id);
+
+    setPosts(filteredPosts);
+  };
+
   return (
     <main className="Application">
       <h1>Think Piece</h1>
-      <Posts posts={posts} onCreate={handleCreate} />
+      <Posts posts={posts} onCreate={handleCreate} onRemove={handleRemove} />
     </main>
   );
 }
