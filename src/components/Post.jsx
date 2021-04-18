@@ -8,6 +8,12 @@ const Post = (props) => {
 
   const postRef = firestore.doc(`posts/${id}`);
 
+  const remove = () => postRef.delete();
+
+  // this is actually kind of nuts...it's making me just rethink what noSql really is...
+  // it feels like I have to unlearn Rails
+  const star = () => postRef.update({ stars: stars + 1 });
+
   return (
     <article className="Post">
       <div className="Post--content">
@@ -29,11 +35,13 @@ const Post = (props) => {
             {comments}
           </p>
           <p>Posted by {user.displayName}</p>
-          <p>{moment(createdAt).calendar()}</p>
+          <p>{moment(createdAt.toDate()).calendar()}</p>
         </div>
         <div>
-          <button className="star">Star</button>
-          <button className="delete" onClick={() => postRef.delete()}>
+          <button className="star" onClick={star}>
+            Star
+          </button>
+          <button className="delete" onClick={remove}>
             Delete
           </button>
         </div>
