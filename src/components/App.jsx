@@ -1,11 +1,13 @@
 import "./App.css";
-import { firestore } from "../firebase";
+import { firestore, auth } from "../firebase";
 import React, { useState, useEffect } from "react";
+import Authentication from "./Authentication";
 import Posts from "./Posts";
 import { collectIdsAndDocs } from "../utilities";
 
 function App() {
   const [posts, setPosts] = useState([]);
+  const [user, setUser] = useState(null);
 
   // let unsubscribe = null;
 
@@ -45,7 +47,7 @@ function App() {
       // PROS: no need to prop drill functions to bubble up state to the App
 
       // CONS: some more listener cleanup which seems very confusing if you don't know Firebase
-      const unsubscribe = firestore
+      const unsubscribeFromFirestore = firestore
         .collection("posts")
         .onSnapshot((snapshot) => {
           console.log("does snapshot hit?");
@@ -53,8 +55,16 @@ function App() {
           setPosts(posts);
         });
 
+      // returns just now logged in user or null for a user if just logged out
+      const unsubscribeFromAuth = auth.onAuthStateChanged((user) => {
+        console.log("user: ", user);
+        setUser(user);
+      });
+
       return () => {
-        unsubscribe();
+        // cleanup functions... weird syntax to remove  listeners but oh well.
+        unsubscribeFromFirestore();
+        unsubscribeFromAuth();
       };
     }
 
@@ -77,6 +87,7 @@ function App() {
   return (
     <main className="Application">
       <h1>Think Piece</h1>
+      <Authentication user={user} />
       <Posts posts={posts} />
     </main>
   );

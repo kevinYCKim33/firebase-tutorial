@@ -1,6 +1,6 @@
 import firebase from "@firebase/app"; // supposedely should do firebase/app but not working
 import "@firebase/firestore";
-
+import "@firebase/auth";
 // clicked on something that said add firebase to your web app
 // https://console.firebase.google.com/u/1/project/think-piece-dad44/overview
 const firebaseConfig = {
@@ -17,7 +17,10 @@ firebase.initializeApp(firebaseConfig);
 // firebase.analytics();
 
 export const firestore = firebase.firestore(); // this is all it takes to get a database
-
+export const auth = firebase.auth();
 window.firebase = firebase; // solely for debugging purposes
 
-export default firebase;
+export const provider = new firebase.auth.GoogleAuthProvider();
+// export const signInWithGoogle = auth.signInWithGoogle(provider);
+export const signInWithGoogle = () => auth.signInWithPopup(provider);
+// export default firebase;
