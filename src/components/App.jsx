@@ -7,6 +7,8 @@ import { collectIdsAndDocs } from "../utilities";
 function App() {
   const [posts, setPosts] = useState([]);
 
+  // let unsubscribe = null;
+
   useEffect(() => {
     async function executeOnMount() {
       // You can await here
@@ -26,11 +28,31 @@ function App() {
       // snapshot.docs.map();
 
       // https://console.firebase.google.com/u/1/project/think-piece-dad44/authentication/providers
-      const snapshot = await firestore.collection("posts").get();
+      // const snapshot = await firestore.collection("posts").get();
 
-      const posts = snapshot.docs.map(collectIdsAndDocs);
+      // const posts = snapshot.docs.map(collectIdsAndDocs);
 
-      setPosts(posts);
+      // setPosts(posts);
+
+      // onSnapshot: an alternative to get()
+      // feels more like ActionCable
+      // basically putting in a listener...
+      // any time the snapshot changes, update the UI
+      // executing unsubscribe() makes it equivalent to unmounting
+
+      // PROS: other browsers automatically get new posts populating the UI
+      // PROS: no need to do any async await update UI action on handleCreate I would think
+      // CONS: some more listener cleanup which seems very confusing if you don't know Firebase
+      const unsubscribe = firestore
+        .collection("posts")
+        .onSnapshot((snapshot) => {
+          const posts = snapshot.docs.map(collectIdsAndDocs);
+          setPosts(posts);
+        });
+
+      return () => {
+        unsubscribe();
+      };
     }
 
     executeOnMount();
