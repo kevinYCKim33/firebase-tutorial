@@ -61,23 +61,23 @@ function App() {
     executeOnMount();
   }, []);
 
-  const handleCreate = async (post) => {
-    firestore.collection("posts").add(post);
+  // const handleCreate = async (post) => {
+  //   firestore.collection("posts").add(post);
 
-    // const doc = await docRef.get();
+  //   // const doc = await docRef.get();
 
-    // const newPost = collectIdsAndDocs(doc);
+  //   // const newPost = collectIdsAndDocs(doc);
 
-    // setPosts([newPost, ...posts]);
-  };
+  //   // setPosts([newPost, ...posts]);
+  // };
 
-  const handleRemove = async (id) => {
-    firestore.doc(`posts/${id}`).delete();
-  };
+  // const handleRemove = async (id) => {
+  //   firestore.doc(`posts/${id}`).delete();
+  // };
   return (
     <main className="Application">
       <h1>Think Piece</h1>
-      <Posts posts={posts} onCreate={handleCreate} onRemove={handleRemove} />
+      <Posts posts={posts} />
     </main>
   );
 }
