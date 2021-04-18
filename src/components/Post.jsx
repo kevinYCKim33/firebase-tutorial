@@ -5,6 +5,9 @@ import moment from "moment";
 
 const Post = (props) => {
   const { title, content, user, createdAt, stars, comments, id } = props;
+
+  const postRef = firestore.doc(`posts/${id}`);
+
   return (
     <article className="Post">
       <div className="Post--content">
@@ -30,10 +33,7 @@ const Post = (props) => {
         </div>
         <div>
           <button className="star">Star</button>
-          <button
-            className="delete"
-            onClick={() => firestore.doc(`posts/${id}`).delete()}
-          >
+          <button className="delete" onClick={() => postRef.delete()}>
             Delete
           </button>
         </div>
