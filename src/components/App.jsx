@@ -42,10 +42,13 @@ function App() {
 
       // PROS: other browsers automatically get new posts populating the UI
       // PROS: no need to do any async await update UI action on handleCreate I would think
+      // PROS: no need to prop drill functions to bubble up state to the App
+
       // CONS: some more listener cleanup which seems very confusing if you don't know Firebase
       const unsubscribe = firestore
         .collection("posts")
         .onSnapshot((snapshot) => {
+          console.log("does snapshot hit?");
           const posts = snapshot.docs.map(collectIdsAndDocs);
           setPosts(posts);
         });
@@ -59,25 +62,18 @@ function App() {
   }, []);
 
   const handleCreate = async (post) => {
-    const docRef = await firestore.collection("posts").add(post);
+    firestore.collection("posts").add(post);
 
-    const doc = await docRef.get();
+    // const doc = await docRef.get();
 
-    const newPost = collectIdsAndDocs(doc);
+    // const newPost = collectIdsAndDocs(doc);
 
-    setPosts([newPost, ...posts]);
+    // setPosts([newPost, ...posts]);
   };
-
-  console.log("posts: ", posts);
 
   const handleRemove = async (id) => {
-    await firestore.doc(`posts/${id}`).delete();
-
-    const filteredPosts = posts.filter((post) => post.id !== id);
-
-    setPosts(filteredPosts);
+    firestore.doc(`posts/${id}`).delete();
   };
-
   return (
     <main className="Application">
       <h1>Think Piece</h1>
