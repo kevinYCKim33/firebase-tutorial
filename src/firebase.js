@@ -20,6 +20,32 @@ export const firestore = firebase.firestore(); // this is all it takes to get a 
 export const auth = firebase.auth();
 window.firebase = firebase; // solely for debugging purposes
 
+export const createUserProfileDocument = async (user, additionalData) => {
+  if (!user) return;
+
+  // Get a reference to the place in the database where a user profile might be.
+  const userRef = firestore.doc(`users/${user.uid}`);
+
+  // Go and fetch the document from that location.
+  const snapshot = await userRef.get();
+
+  if (!snapshot.exists) {
+    const { displayName, email, photoURL } = user;
+    const createdAt = new Date();
+    try {
+      await userRef.set({
+        displayName,
+        email,
+        photoURL,
+        createdAt,
+        ...additionalData,
+      });
+    } catch (error) {
+      console.error("Error creating user", error);
+    }
+  }
+};
+
 export const provider = new firebase.auth.GoogleAuthProvider();
 // export const signInWithGoogle = auth.signInWithGoogle(provider);
 export const signInWithGoogle = () => auth.signInWithPopup(provider);
