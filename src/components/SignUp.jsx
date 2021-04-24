@@ -1,18 +1,41 @@
-import React, { Component } from 'react';
-
+import React, { Component } from "react";
+import { auth } from "../firebase";
 class SignUp extends Component {
-  state = { displayName: '', email: '', password: '' };
+  state = { displayName: "", email: "", password: "" };
 
-  handleChange = event => {
+  handleChange = (event) => {
     const { name, value } = event.target;
 
     this.setState({ [name]: value });
   };
 
-  handleSubmit = event => {
+  handleSubmit = async (event) => {
     event.preventDefault();
 
-    this.setState({ displayName: '', email: '', password: '' });
+    const { email, password, displayName } = this.state;
+
+    try {
+      const { user } = await auth.createUserWithEmailAndPassword(
+        email,
+        password
+      );
+
+      // AT THIS await IN TIME
+      // first await, we log them in
+      // which triggers auth state change: auth.onAuthStateChanged in App.jsx
+      // Authentication.jsx flips from SignInAndSignUp to CurrentUser
+
+      // At this point, this dude's got his email, and created at all addressed...
+
+      // then we update the user's displayName... server side it gets there...
+      // UI wise, we're already showing CurrentUser
+      user.updateProfile({ displayName }); // this is updating the server a tick too late
+      //
+    } catch (error) {
+      console.error(error);
+    }
+
+    this.setState({ displayName: "", email: "", password: "" });
   };
 
   render() {
