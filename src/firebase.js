@@ -23,4 +23,5 @@ window.firebase = firebase; // solely for debugging purposes
 export const provider = new firebase.auth.GoogleAuthProvider();
 // export const signInWithGoogle = auth.signInWithGoogle(provider);
 export const signInWithGoogle = () => auth.signInWithPopup(provider);
+export const signOut = () => auth.signOut();
 // export default firebase;
