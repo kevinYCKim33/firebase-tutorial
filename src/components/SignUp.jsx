@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { auth } from "../firebase";
+import { auth, createUserProfileDocument } from "../firebase";
 class SignUp extends Component {
   state = { displayName: "", email: "", password: "" };
 
@@ -29,8 +29,9 @@ class SignUp extends Component {
 
       // then we update the user's displayName... server side it gets there...
       // UI wise, we're already showing CurrentUser
-      user.updateProfile({ displayName }); // this is updating the server a tick too late
-      //
+      // user.updateProfile({ displayName }); // this is updating the server a tick too late
+
+      createUserProfileDocument(user, { displayName });
     } catch (error) {
       console.error(error);
     }

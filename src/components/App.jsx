@@ -1,5 +1,5 @@
 import "./App.css";
-import { firestore, auth } from "../firebase";
+import { firestore, auth, createUserProfileDocument } from "../firebase";
 import React, { useState, useEffect } from "react";
 import Authentication from "./Authentication";
 import Posts from "./Posts";
@@ -56,8 +56,11 @@ function App() {
         });
 
       // returns just now logged in user or null for a user if just logged out
-      const unsubscribeFromAuth = auth.onAuthStateChanged((user) => {
-        console.log("user: ", user);
+      const unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
+        console.log("does this work at least?");
+        console.log("userAuth: ", userAuth);
+        const user = await createUserProfileDocument(userAuth);
+        console.log(user);
         setUser(user);
       });
 
