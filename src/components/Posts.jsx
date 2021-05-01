@@ -7,6 +7,7 @@ const Posts = () => {
   return (
     <section className="Posts">
       <AddPost />
+      {/* cool quirky way to go about it pre hooks era */}
       <PostsContext.Consumer>
         {(posts) => posts.map((post) => <Post {...post} key={post.id} />)}
       </PostsContext.Consumer>
