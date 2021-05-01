@@ -26,7 +26,7 @@ export const createUserProfileDocument = async (user, additionalData) => {
   console.log("user: ", user);
   console.log("addtionalData: ", additionalData);
   // additionalData: {displayName: "Elaine Benes"} when manually signing in
-  // handles signing out
+  // handles signing out;
   if (!user) return;
 
   // Get a reference to the place in the database where a user profile might be.
