@@ -47,13 +47,13 @@ function App() {
       // PROS: no need to prop drill functions to bubble up state to the App
 
       // CONS: some more listener cleanup which seems very confusing if you don't know Firebase
-      const unsubscribeFromFirestore = firestore
-        .collection("posts")
-        .onSnapshot((snapshot) => {
-          console.log("does snapshot hit?");
-          const posts = snapshot.docs.map(collectIdsAndDocs);
-          setPosts(posts);
-        });
+      // const unsubscribeFromFirestore = firestore
+      //   .collection("posts")
+      //   .onSnapshot((snapshot) => {
+      //     console.log("does snapshot hit?");
+      //     const posts = snapshot.docs.map(collectIdsAndDocs);
+      //     setPosts(posts);
+      //   });
 
       // returns just now logged in user or null for a user if just logged out
       // buggy API, I'm at peace with it
@@ -70,7 +70,7 @@ function App() {
 
       return () => {
         // cleanup functions... weird syntax to remove  listeners but oh well.
-        unsubscribeFromFirestore();
+        // unsubscribeFromFirestore();
         unsubscribeFromAuth();
       };
     }
