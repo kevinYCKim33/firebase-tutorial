@@ -27,6 +27,7 @@ function App() {
       //     console.log({ snapshot });
       //   });
 
+      //
       // snapshot.docs.map();
 
       // https://console.firebase.google.com/u/1/project/think-piece-dad44/authentication/providers
