@@ -15,6 +15,7 @@ class SignUp extends Component {
     const { email, password, displayName } = this.state;
 
     try {
+      // normal firebase command
       const { user } = await auth.createUserWithEmailAndPassword(
         email,
         password
@@ -31,6 +32,11 @@ class SignUp extends Component {
       // UI wise, we're already showing CurrentUser
       // user.updateProfile({ displayName }); // this is updating the server a tick too late
 
+      // Place 1 of 2 of createUserProfileDocument() being called
+      // User manually signs up sans Google OAuth
+      // hmm so displayName is a firebase user property
+      // at this point, user.displayName is null
+      console.log("Im called inside handleSubmit!");
       createUserProfileDocument(user, { displayName });
     } catch (error) {
       console.error(error);

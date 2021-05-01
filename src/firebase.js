@@ -20,21 +20,24 @@ export const firestore = firebase.firestore(); // this is all it takes to get a 
 export const auth = firebase.auth();
 window.firebase = firebase; // solely for debugging purposes
 
+// additionalData: i.e. displayName
 export const createUserProfileDocument = async (user, additionalData) => {
+  console.log("createUserProfileDocument() executed!");
+  console.log("user: ", user);
+  console.log("addtionalData: ", additionalData);
+  // additionalData: {displayName: "Elaine Benes"} when manually signing in
+  // handles signing out
   if (!user) return;
 
-  console.log("do i make it up to here?");
   // Get a reference to the place in the database where a user profile might be.
-
-  console.log("what is the userid?", user.uid);
   const userRef = firestore.doc(`users/${user.uid}`);
 
-  console.log("what about here?");
   // Go and fetch the document from that location.
   const snapshot = await userRef.get();
 
   console.log("what about after snapshot");
 
+  // if snapshot doesn't exist, then we should create a user
   if (!snapshot.exists) {
     const { displayName, email, photoURL } = user;
     const createdAt = new Date();
@@ -50,13 +53,16 @@ export const createUserProfileDocument = async (user, additionalData) => {
       console.error("Error creating user", error);
     }
   }
-
+  // user is either created or snapshot is retrieved here
+  console.log("hello!");
+  // create then get
   return getUserDocument(user.uid);
 };
 
 export const getUserDocument = async (uid) => {
   if (!uid) return null;
   try {
+    // alternative syntax
     const userDocument = await firestore.collection("users").doc(uid).get();
 
     return {
