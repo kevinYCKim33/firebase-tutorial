@@ -56,6 +56,8 @@ function App() {
         });
 
       // returns just now logged in user or null for a user if just logged out
+      // buggy API, I'm at peace with it
+      // https://stackoverflow.com/questions/37673616/firebase-android-onauthstatechanged-called-twice
       const unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
         // console.log("does this work at least?");
         // Place 2 of 2 of createUserProfileDocument() being called
