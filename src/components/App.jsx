@@ -1,12 +1,10 @@
 import "./App.css";
-import { firestore, auth, createUserProfileDocument } from "../firebase";
+import { auth, createUserProfileDocument } from "../firebase";
 import React, { useState, useEffect } from "react";
 import Authentication from "./Authentication";
 import Posts from "./Posts";
-import { collectIdsAndDocs } from "../utilities";
 
 function App() {
-  const [posts, setPosts] = useState([]);
   const [user, setUser] = useState(null);
 
   // let unsubscribe = null;
@@ -71,7 +69,6 @@ function App() {
 
       return () => {
         // cleanup functions... weird syntax to remove  listeners but oh well.
-        // unsubscribeFromFirestore();
         unsubscribeFromAuth();
       };
     }
@@ -96,7 +93,7 @@ function App() {
     <main className="Application">
       <h1>Think Piece</h1>
       <Authentication user={user} />
-      <Posts posts={posts} />
+      <Posts />
     </main>
   );
 }
