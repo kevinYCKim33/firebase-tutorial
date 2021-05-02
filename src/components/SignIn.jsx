@@ -12,7 +12,7 @@ class SignIn extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-
+    console.log("this doesnt do anything; toDo: wire it up to login");
     this.setState({ email: "", password: "" });
   };
 

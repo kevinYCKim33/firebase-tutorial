@@ -4,12 +4,15 @@ import "./index.css";
 import App from "./components/App";
 import reportWebVitals from "./reportWebVitals";
 import PostsProvider from "./providers/PostsProvider";
+import UserProvider from "./providers/UserProvider";
 
 ReactDOM.render(
   <React.StrictMode>
-    <PostsProvider>
-      <App />
-    </PostsProvider>
+    <UserProvider>
+      <PostsProvider>
+        <App />
+      </PostsProvider>
+    </UserProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );
