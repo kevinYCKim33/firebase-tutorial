@@ -6,13 +6,17 @@ import reportWebVitals from "./reportWebVitals";
 import PostsProvider from "./providers/PostsProvider";
 import UserProvider from "./providers/UserProvider";
 
+import { BrowserRouter as Router } from "react-router-dom";
+
 ReactDOM.render(
   <React.StrictMode>
-    <UserProvider>
-      <PostsProvider>
-        <App />
-      </PostsProvider>
-    </UserProvider>
+    <Router>
+      <UserProvider>
+        <PostsProvider>
+          <App />
+        </PostsProvider>
+      </UserProvider>
+    </Router>
   </React.StrictMode>,
   document.getElementById("root")
 );
