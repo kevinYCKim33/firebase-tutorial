@@ -59,9 +59,20 @@ const UserProvider = ({ children }) => {
         // Place 2 of 2 of createUserProfileDocument() being called
         // User signs in/up with Google OAuth
 
-        console.log("Im called from firebase listener!");
-        const user = await createUserProfileDocument(userAuth);
-        setUser(user);
+        if (userAuth) {
+          // if you're logged in; remember userAuth == null when logged out
+
+          // get the user document from firestore!
+          const userRef = await createUserProfileDocument(userAuth);
+
+          // now anytime that changes; i.e. his displayname for example
+          userRef.onSnapshot((snapshot) => {
+            // just update the user profile in the UI
+
+            // no refetching; firestore listeners do all the work for you!
+            setUser({ uid: snapshot.id, ...snapshot.data() });
+          });
+        }
       });
 
       return () => {

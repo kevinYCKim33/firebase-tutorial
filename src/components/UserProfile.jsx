@@ -22,6 +22,8 @@ class UserProfile extends Component {
     const { displayName } = this.state;
 
     if (displayName) {
+      // cool firebase syntax;
+      // updates server, but must refresh to continue
       this.userRef.update({ displayName });
     }
   };

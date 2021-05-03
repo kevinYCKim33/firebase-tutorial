@@ -63,12 +63,8 @@ export const getUserDocument = async (uid) => {
   if (!uid) return null;
   try {
     // alternative syntax
-    const userDocument = await firestore.collection("users").doc(uid).get();
-
-    return {
-      uid,
-      ...userDocument.data(),
-    };
+    // this refactor was a bit strange for me
+    return firestore.collection("users").doc(uid);
   } catch (error) {
     console.error("Error fetching user", error.message);
   }
