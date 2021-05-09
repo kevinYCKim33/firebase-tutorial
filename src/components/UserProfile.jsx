@@ -4,6 +4,7 @@ class UserProfile extends Component {
   state = { displayName: "" };
   imageInput = null;
 
+  // derp
   get uid() {
     return auth.currentUser.uid;
   }
