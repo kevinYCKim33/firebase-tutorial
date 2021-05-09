@@ -1269,6 +1269,14 @@
     "@firebase/util" "0.4.1"
     "tslib" "^2.1.0"
 
+"@firebase/component@0.5.0":
+  "integrity" "sha512-v18csWtXb0ri+3m7wuGLY/UDgcb89vuMlZGQ//+7jEPLIQeLbylvZhol1uzW9WzoOpxMxOS2W5qyVGX36wZvEA=="
+  "resolved" "https://registry.npmjs.org/@firebase/component/-/component-0.5.0.tgz"
+  "version" "0.5.0"
+  dependencies:
+    "@firebase/util" "1.1.0"
+    "tslib" "^2.1.0"
+
 "@firebase/firestore-types@2.2.0":
   "integrity" "sha512-5kZZtQ32FIRJP1029dw+ZVNRCclKOErHv1+Xn0pw/5Fq3dxroA/ZyFHqDu+uV52AyWHhNLjCqX43ibm4YqOzRw=="
   "resolved" "https://registry.npmjs.org/@firebase/firestore-types/-/firestore-types-2.2.0.tgz"
@@ -1294,10 +1302,32 @@
   "resolved" "https://registry.npmjs.org/@firebase/logger/-/logger-0.2.6.tgz"
   "version" "0.2.6"
 
+"@firebase/storage-types@0.4.1":
+  "integrity" "sha512-IM4cRzAnQ6QZoaxVZ5MatBzqXVcp47hOlE28jd9xXw1M9V7gfjhmW0PALGFQx58tPVmuUwIKyoEbHZjV4qRJwQ=="
+  "resolved" "https://registry.npmjs.org/@firebase/storage-types/-/storage-types-0.4.1.tgz"
+  "version" "0.4.1"
+
+"@firebase/storage@^0.5.2":
+  "integrity" "sha512-D2lZixL6E2iXE4jObtlA3UnAbcMd3657erotiuZt5ap95m1fogiPV/gIq3KLIaT5sFdfbbDQn9mm6hVKhobYHA=="
+  "resolved" "https://registry.npmjs.org/@firebase/storage/-/storage-0.5.2.tgz"
+  "version" "0.5.2"
+  dependencies:
+    "@firebase/component" "0.5.0"
+    "@firebase/storage-types" "0.4.1"
+    "@firebase/util" "1.1.0"
+    "tslib" "^2.1.0"
+
 "@firebase/util@0.4.1", "@firebase/util@0.x":
   "integrity" "sha512-XhYCOwq4AH+YeQBEnDQvigz50WiiBU4LnJh2+//VMt4J2Ybsk0eTgUHNngUzXsmp80EJrwal3ItODg55q1ajWg=="
   "resolved" "https://registry.npmjs.org/@firebase/util/-/util-0.4.1.tgz"
   "version" "0.4.1"
+  dependencies:
+    "tslib" "^2.1.0"
+
+"@firebase/util@1.1.0", "@firebase/util@1.x":
+  "integrity" "sha512-lfuSASuPKNdfebuFR8rjFamMQUPH9iiZHcKS755Rkm/5gRT0qC7BMhCh3ZkHf7NVbplzIc/GhmX2jM+igDRCag=="
+  "resolved" "https://registry.npmjs.org/@firebase/util/-/util-1.1.0.tgz"
+  "version" "1.1.0"
   dependencies:
     "tslib" "^2.1.0"
 
