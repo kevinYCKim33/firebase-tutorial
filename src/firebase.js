@@ -1,6 +1,7 @@
 import firebase from "@firebase/app"; // supposedely should do firebase/app but not working
 import "@firebase/firestore";
 import "@firebase/auth";
+import "@firebase/storage"; // for photo uploading
 // clicked on something that said add firebase to your web app
 // https://console.firebase.google.com/u/1/project/think-piece-dad44/overview
 const firebaseConfig = {
@@ -18,6 +19,7 @@ firebase.initializeApp(firebaseConfig);
 
 export const firestore = firebase.firestore(); // this is all it takes to get a database
 export const auth = firebase.auth();
+export const storage = firebase.storage();
 window.firebase = firebase; // solely for debugging purposes
 
 // additionalData: i.e. displayName

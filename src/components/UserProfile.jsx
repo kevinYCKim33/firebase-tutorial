@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { auth, firestore } from "../firebase";
+import { auth, firestore, storage } from "../firebase";
 class UserProfile extends Component {
   state = { displayName: "" };
   imageInput = null;
@@ -10,6 +10,10 @@ class UserProfile extends Component {
 
   get userRef() {
     return firestore.doc(`/users/${this.uid}`);
+  }
+
+  get file() {
+    return this.imageInput && this.imageInput.files[0];
   }
 
   handleChange = (event) => {
@@ -24,7 +28,19 @@ class UserProfile extends Component {
     if (displayName) {
       // cool firebase syntax;
       // updates server, but must refresh to continue
+      // but if user listeners set up, then it will auto update
       this.userRef.update({ displayName });
+    }
+
+    if (this.file) {
+      storage
+        .ref()
+        .child("user-profiles")
+        .child(this.uid)
+        .child(this.file.name)
+        .put(this.file)
+        .then((response) => response.ref.getDownloadURL())
+        .then((photoURL) => this.userRef.update({ photoURL }));
     }
   };
 
