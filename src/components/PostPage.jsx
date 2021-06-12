@@ -6,6 +6,7 @@ import Comments from "./Comments";
 import { firestore } from "../firebase";
 
 import { collectIdsAndDocs } from "../utilities";
+import withUser from "./withUser";
 import { withRouter } from "react-router-dom";
 
 class PostPage extends Component {
@@ -45,9 +46,10 @@ class PostPage extends Component {
   };
 
   createComment = (comment) => {
-    console.log(comment);
+    const { user } = this.props; // thanks to withUser HOC we made
     this.commentsRef.add({
       ...comment,
+      user,
     });
   };
 
@@ -62,4 +64,5 @@ class PostPage extends Component {
   }
 }
 
-export default withRouter(PostPage);
+// could use compose to make it look prettier
+export default withRouter(withUser(PostPage));
