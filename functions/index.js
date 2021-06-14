@@ -29,6 +29,10 @@ exports.getAllPosts = functions.https.onRequest(async (request, response) => {
   response.json({ posts });
 });
 
+// wow...so anytime a post has the word coffeescript in it,
+// it'll replace it with **** with Cloud Functions
+// wrote some weird code 'cause triggering change is sort of
+// recursion-y...
 exports.sanitizeContent = functions.firestore
   .document("posts/{postId}")
   .onWrite(async (change) => {
@@ -44,4 +48,17 @@ exports.sanitizeContent = functions.firestore
     }
 
     return null;
+  });
+
+// the comment count will go up next to the monkey emoji.
+// cloud functions are so cool!!
+exports.incrementCommentCount = functions.firestore
+  .document("posts/{postId}/comments/{commentId}")
+  .onCreate(async (snapshot, context) => {
+    const { postId } = context.params;
+    const postRef = firestore.doc(`posts/${postId}`);
+
+    const snap = await postRef.get("comments");
+    const comments = snap.get("comments");
+    return postRef.update({ comments: comments + 1 });
   });
