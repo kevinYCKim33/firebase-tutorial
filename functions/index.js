@@ -7,6 +7,9 @@ const admin = require("firebase-admin");
 // Big Idea: run firebase deploy --only functions on terminal,
 // get these cool https urls where you have https endpoints
 
+// firebase serve --only functions
+// these commands will run on localhost:5000
+
 admin.initializeApp(functions.config().firebase);
 
 const firestore = admin.firestore();
